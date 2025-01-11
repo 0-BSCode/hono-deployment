@@ -20,4 +20,6 @@ jobs:
                 script: |
                     cd ${{ secrets.DOMAIN }}
                     git clone https://github.com/0-BSCode/hono-deployment.git .
+                    bun install
+                    bun pm2 start "bun run start"
             
