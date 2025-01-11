@@ -18,9 +18,9 @@ jobs:
                 password: ${{ secrets.PASSWORD }}
                 port: ${{ secrets.PORT }}
                 script: |
-                    mkdir ${{ secrets.DOMAIN }}
+                    rm -rf ${{ secrets.DOMAIN }}
+                    git clone https://github.com/0-BSCode/hono-deployment.git ${{ secrets.DOMAIN }}
                     cd ${{ secrets.DOMAIN }}
-                    git clone https://github.com/0-BSCode/hono-deployment.git .
                     bun install
                     bun pm2 start "bun run start"
             
