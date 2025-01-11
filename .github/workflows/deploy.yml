@@ -1,0 +1,26 @@
+name: Deploy Pipeline
+
+on:
+    push:
+        branches:
+            - release
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Notification
+              run: echo "Deploying to production"
+            
+            - name: Deploy
+              uses: appleboy/ssh-action@v1.2.0
+              with:
+                host: ${{ secrets.HOST }}
+                username: ${{ secrets.USERNAME}}
+                password: ${{ secrets.PASSWORD }}
+                port: ${{ secrets.PORT }}
+                script: |
+                    cd ${{ secrets.DOMAIN }}
+                    git reset --hard && git clean -df && git pull origin main
+                    bun install
+                    bun pm2 restart all

@@ -1,0 +1,23 @@
+name: Set up Github on Remote
+
+on:
+    workflow_dispatch: 
+
+jobs:
+    initialize:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Notification
+              run: echo "Set up Github on Remote"
+            
+            - name: Provisioning
+              uses: appleboy/ssh-action@v1.2.0
+              with:
+                host: ${{ secrets.HOST }}
+                username: ${{ secrets.USERNAME}}
+                password: ${{ secrets.PASSWORD }}
+                port: ${{ secrets.PORT }}
+                script: |
+                    cd ${{ secrets.DOMAIN }}
+                    git clone https://github.com/0-BSCode/hono-deployment.git .
+            
